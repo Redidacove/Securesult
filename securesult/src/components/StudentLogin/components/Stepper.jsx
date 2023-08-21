@@ -9,7 +9,6 @@ import Personal from "./RegdFormPages/Personal";
 import Address from "./RegdFormPages/Address";
 import RegdInfo from "./RegdFormPages/RegdInfo";
 import { Button2, Title } from "./StyleComponents";
-import { Link } from "react-router-dom";
 
 const steps = ["", "", ""];
 
@@ -88,19 +87,21 @@ export default function HorizontalStepper() {
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "center",
-                mt: 30,
-                padding: "20px 50px 0px 50px",
+                justifyContent:"center",
+                mt:30,
+                padding: "20px 50px 0px 50px"
               }}
             >
               {/* <Box sx={{ flex: "1 1 auto" }} /> */}
-              <Button2 onClick={handleReset} color="inherit" sx={{ mr: 2 }}>
+              <Button2
+                onClick={handleReset}
+                color="inherit"
+                sx={{ mr: 2 }}
+              >
                 Reset
               </Button2>
               <Box sx={{ flex: "1 1 auto" }} />
-              <Link to="/dashboard">
-                <Button2 onClick={SubmitForm}>Submit</Button2>{" "}
-              </Link>
+              <Button2 onClick={SubmitForm}>Submit</Button2>
             </Box>
           </React.Fragment>
         ) : (
@@ -112,7 +113,7 @@ export default function HorizontalStepper() {
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                padding: "20px 50px 0px 50px",
+                padding: "20px 50px 0px 50px"
               }}
             >
               <Button2

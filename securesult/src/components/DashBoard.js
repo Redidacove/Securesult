@@ -4,8 +4,9 @@ import ResultContainer from "./ResultContainer";
 
 const DashBoard = () => {
   return (
-    <div className="flex flex-row m-0">
+    <div className="flex">
       <Navbar />
+      
       <ResultContainer />
     </div>
   );
