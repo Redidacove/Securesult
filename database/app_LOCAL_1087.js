@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const cors = require('cors');
 const mongoose = require("mongoose");
 // const lodash = require("lodash");
 // const session = require("express-session");
@@ -14,9 +13,8 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.set('view engine', 'ejs');
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-app.use(cors());
 
 // app.use(session({
 //     secret:process.env.SECRET_STRING,
@@ -103,83 +101,32 @@ app.get("/",function(req,res){
     res.render("home");
 });
 
-app.post("/register_student",function(req,res){
-    formData = req.body;
-  console.log('Received form data:', formData);
-  
-  // Process the form data as needed
-  
-  res.send('Form data received successfully');
-});
-
-app.get("/register_student",function(req,res){
-    res.send("done");
-});
-
-app.get("/register_teacher",function(req,res){
-    res.send("done");
-});
-
-app.post("/register_teacher",function(req,res){
-    formData = req.body;
-  console.log('Received form data:', formData);
-  
-  // Process the form data as needed
-  
-  res.send('Form data received successfully');
-});
-
-app.get("/teacher_dashboard",function(req,res){
-    res.send("job done for teacher")
-});
-
-app.post("/teacher_dashboard",function(req,res){
-    console.log(req.body);
-    const roll = req.body.rollno;
-    const class_ = req.body.class;
-    const sec = req.body.sec;
-    const r=req.body.result;
-    key = class_ + "@" + sec + "@" + roll;
-    const resu = new Result({
-        key:key,
-        result:r
-    });
-    console.log("resu="+resu);
-    console.log("r="+r);
-    resu.save();
-    res.redirect("/teacher_dashboard");
-});
-
-app.get("/student_dashboard",function(req,res){
-    res.send("job done for student")
-});
-
-app.post("/student_dashboard",function(req,res){
-    const roll = req.body.rollno;
-    const class_ = req.body.class;
-    const sec = req.body.sec;
-    key = class_ + "@" + sec + "@" + roll;
-    console.log(key);
-    Result.findOne({key:key})
-        .then(foundres => {
-            console.log(foundres);
-            res.redirect(foundres.result);
-        })
-        .catch(error => {
-            console.log('Error finding data:', error);
-        });
-});
-
 //#######todo#######
+// app.get("/register_student",function(req,res){
+//     res.render("register_student");
+// });
+
 // app.get("/login_student",function(req,res){
 //     res.render("login_student");
+// });
+
+// app.get("/register_teacher",function(req,res){
+//     res.render("register_teacher");
 // });
 
 // app.get("/login_teacher",function(req,res){
 //     res.render("login_teacher");
 // });
 
+// app.post("/register_student",function(req,res){
+//     //todo
+// });
+
 // app.post("/login_student",function(req,res){
+//     //todo
+// });
+
+// app.post("/register_teacher",function(req,res){
 //     //todo
 // });
 
@@ -197,6 +144,33 @@ app.post("/student_dashboard",function(req,res){
 // });
 //############################################
 
-app.listen(5000, function() {
-    console.log("Server started on port 5000");
+app.get("/teacher",function(req,res){
+    const roll = req.body.roll_no;
+    const class_ = req.body.class_name;
+    const sec = req.body.section;
+    key = class_ + "@" + sec + "@" + roll;
+    const resu = new Result({
+        key:key,
+        result:"Grade a15"
+    });
+    resu.save();
+    res.send("done");
+});
+
+app.get("/student",function(req,res){
+    const roll = req.body.roll_no;
+    const class_ = req.body.class_name;
+    const sec = req.body.section;
+    key = class_ + "@" + sec + "@" + roll;
+    Result.findOne({key:key})
+            .then(foundres => {
+                res.send(foundres);
+            })
+            .catch(error => {
+                console.log('Error finding data:', error);
+            });
+});
+
+app.listen(3000, function() {
+    console.log("Server started on port 3000");
 });

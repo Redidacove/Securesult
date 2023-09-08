@@ -183,13 +183,6 @@ app.post("/student_dashboard",function(req,res){
 //     //todo
 // });
 
-// app.post("/login_teacher",function(req,res){
-//     //todo
-// });
-
-// app.get("/logout",function(req,res){
-//     req.logOut(function(err){
-//         if(err){
 //             console.log("error4:"+err);
 //         }
 //     });
