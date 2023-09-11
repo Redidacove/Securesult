@@ -7,7 +7,7 @@ import Personal from "./RegdFormPages/Personal";
 import Address from "./RegdFormPages/Address";
 import RegdInfo from "./RegdFormPages/RegdInfo";
 import { Button, Title } from "./StyleComponents";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["", "", ""];
 
@@ -27,6 +27,7 @@ const initialData = {
 };
 
 export default function HorizontalStepper() {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = React.useState(0);
   const [formData, setFormData] = React.useState(initialData);
 
@@ -36,32 +37,33 @@ export default function HorizontalStepper() {
 
   const handleSubmitForm = async () => {
     try {
-      const response1 = await fetch('http://localhost:5000/register_student', {
-        method: 'POST',
+      const response1 = await fetch("http://localhost:5000/register_student", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
       if (!response1.ok) {
-        throw new Error('Error sending data to route1');
+        throw new Error("Error sending data to route1");
       }
-  
-      const response2 = await fetch('http://localhost:5000/student_dashboard', {
-        method: 'POST',
+
+      const response2 = await fetch("http://localhost:5000/student_dashboard", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
       if (!response2.ok) {
-        throw new Error('Error sending data to route1');
+        throw new Error("Error sending data to route1");
       }
-  
+
       // Handle the response as needed
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
+    navigate("/dashboardStudent", { state: formData });
     console.log("Form submitted!");
     console.log(formData);
     setActiveStep(0);
@@ -126,9 +128,7 @@ export default function HorizontalStepper() {
           </Button>
           <Box sx={{ flex: "1 1 auto" }} />
           {activeStep === steps.length - 1 ? (
-            <Link to="/dashboardStudent">
-              <Button onClick={handleNext}>Submit</Button>
-            </Link>
+            <Button onClick={handleNext}>Submit</Button>
           ) : (
             <Button onClick={handleNext}>Next</Button>
           )}
