@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Steps from "./Stepper";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ExContainer,
   Container,
@@ -20,6 +20,7 @@ import {
 } from "./StyleComponents";
 
 function Student() {
+  const navigate = useNavigate();
   const [signIn, toggle] = useState(true);
   const [signinFormData, setSigninFormData] = React.useState({
     email: "",
@@ -28,6 +29,7 @@ function Student() {
 
   const handleSubmitForm = () => {
     if (signinFormData.email !== "" && signinFormData.password !== "") {
+      navigate("/dashboardStudent", { state: signinFormData });
       console.log("Login Data submitted!");
       console.log(signinFormData);
     }
@@ -67,9 +69,7 @@ function Student() {
               required
             />
             <Anchor href="#">Forgot your password?</Anchor>
-            <Link to="/dashboardStudent">
-              <Button onClick={handleSubmitForm}>Sigin In</Button>
-            </Link>
+            <Button onClick={handleSubmitForm}>Sigin In</Button>
           </Form>
         </LoginContainer>
 
